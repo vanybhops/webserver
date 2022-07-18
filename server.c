@@ -35,9 +35,8 @@ int main(int argc, char *argv[])
         }
     }
     ptr = fopen(file, "a+");
-    if (NULL == ptr) {
+    if (NULL == ptr)
         return 0;
-    }
     strcpy(sajt,
                 "HTTP/1.1 200 OK\r\n"
                 "Content-Type:text/html;charset:UTF-8\r\n\n"
@@ -61,9 +60,8 @@ int main(int argc, char *argv[])
     int recvbuflen = DEFAULT_BUFLEN;
 
     iResult = WSAStartup(MAKEWORD(2,2), &wsaData);
-    if (iResult != 0) {
+    if (iResult != 0)
         return 1;
-    }
 
     ZeroMemory(&hints, sizeof(hints));
     hints.ai_family = AF_INET;
