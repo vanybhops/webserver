@@ -17,34 +17,39 @@ int main(int argc, char *argv[])
     char ch;
     char str[50];
     char file[32]="";
-    char sajt[1024000];
-    char port[6]="1337";
+    char port[6]="1234";
+    int sz;
     if(argc<3){
         printf("usage is server.exe --html filename.html [optional --port 1234]");
         return 0;
         }
     for (int i = 0; i <argc; i++)
     {
-        if(strncmp(argv[i],"--html",6)==0){
+        if(strncmp(argv[i],"--html",6)==0)
             strcpy(file,argv[i+1]);
-        }
         if(strncmp(argv[i],"--port",6)==0){
-            if(strlen(argv[i+1])>6||(strlen(argv[i+1])==1&&strncmp(argv[i+1],"0",1)==0)){
-                return 0;}
+            if(strlen(argv[i+1])>6||(strlen(argv[i+1])==1&&strncmp(argv[i+1],"0",1)==0))
+                return 0;
             strcpy(port,argv[i+1]);
         }
     }
     ptr = fopen(file, "a+");
     if (NULL == ptr)
         return 0;
+    
+    fseek(ptr, 0L, SEEK_END);
+    sz = ftell(ptr)+74;      //74 is the size of headers|
+    fseek(ptr, 0L, SEEK_SET);//                         |
+    char sajt[sz];           //                         |
+                             //                         ↓
     strcpy(sajt,
                 "HTTP/1.1 200 OK\r\n"
                 "Content-Type:text/html;charset:UTF-8\r\n\n"
                 "<!DOCTYPE html>\r\n"
             );
-    while (fgets(str, 50, ptr) != NULL) {
+    while (fgets(str, 50, ptr) != NULL)
         strcat(sajt,str);
-    }
+    
     fclose(ptr);
     WSADATA wsaData;
     int iResult;
