@@ -121,9 +121,8 @@ int main(int argc, char *argv[])
                 return 1;
             }
         }
-        else if (iResult == 0){
+        else if (iResult == 0)
             closesocket(ClientSocket);
-            }
         else  {
         }
         }while (iResult>0);
